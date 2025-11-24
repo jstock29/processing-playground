@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # Development Environment
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./src:/app/src
+      - ./index.html:/app/index.html
+      - ./vite.config.js:/app/vite.config.js
+      # Don't sync node_modules
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  # Production Environment (Run separately if needed)
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"

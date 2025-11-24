@@ -1,0 +1,188 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+    background: #121212;
+    color: #e0e0e0;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header Styling */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: #1e1e1e;
+    border-bottom: 1px solid #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Button Styling */
+button {
+    background: #333;
+    color: #ccc;
+    border: 1px solid #444;
+    padding: 6px 14px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+button:hover:not(:disabled) {
+    background: #444;
+    color: #fff;
+    border-color: #555;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.recording-btn.active {
+    background: #3d1010;
+    color: #ff6b6b;
+    border-color: #ff4444;
+    animation: pulse 2s infinite;
+}
+
+/* Layout */
+main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background: #181818;
+    min-width: 0; /* Important for flex items to shrink below content size */
+}
+
+.preview-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.controls {
+    padding: 1rem;
+    background: #181818;
+    border-bottom: 1px solid #333;
+    max-height: 40%;
+    overflow-y: auto; /* Scroll controls if too many sliders */
+}
+
+.editor-container {
+    flex: 1;
+    overflow-y: auto; /* Enables vertical scrolling for code */
+    position: relative;
+    background-color: #1e1e1e;
+}
+
+/* Ensure the react-simple-code-editor behaves */
+.editor-container textarea,
+.editor-container pre {
+    min-height: 100%; /* Ensure it fills the area */
+}
+
+/* RESIZER HANDLE STYLES */
+.resizer {
+    width: 10px;
+    background: #2a2a2a;
+    cursor: col-resize;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.resizer:hover, .resizer:active {
+    background: #646cff; /* Highlight on hover/drag */
+}
+
+.open-sidebar-btn {
+    background: #646cff;
+    color: white;
+    border: none;
+    width: 20px;
+    height: 40px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    padding: 0;
+    font-size: 10px;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(255, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0);
+    }
+}
+
+.example-selector {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 20px;
+}
+
+.example-selector select {
+    background: #2d2d2d;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    min-width: 200px;
+}
+
+.example-selector select:focus {
+    outline: none;
+    border-color: #646cff;
+}
+
+/* Adjust header to accommodate the middle section */
+.app-header {
+    gap: 1rem;
+}
