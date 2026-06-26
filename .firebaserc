@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "sandbox-493916"
-  }
+  },
+  "targets": {
+    "sandbox-493916": {
+      "hosting": {
+        "processing-playground": [
+          "sandbox-493916"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
