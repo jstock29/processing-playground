@@ -52,11 +52,8 @@ jobs:
       - name: Deploy to Firebase
         run: |
           echo "Deploying to project: $GCLOUD_PROJECT_ID"
+          # Explicitly set the service account key location as the active credential source
+          gcloud auth activate-service-account --key-file=${{ steps.auth.outputs.credentials_file_path }}
           npx firebase-tools deploy --only hosting:processing-playground --project $GCLOUD_PROJECT_ID
         env:
           GCLOUD_PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
-          # The Firebase CLI automatically picks up the credentials file
-          # if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
-          # Some versions of Firebase CLI also check for this path directly
-          FIREBASE_TOKEN: ""
