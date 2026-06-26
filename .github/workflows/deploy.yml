@@ -34,9 +34,6 @@ jobs:
           workload_identity_provider: "projects/${{ secrets.GCLOUD_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
           service_account: "github-deployer@${{ secrets.GCLOUD_PROJECT_ID }}.iam.gserviceaccount.com"
 
-      - name: Set up Firebase CLI Authentication
-        run: echo "GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }}" >> $GITHUB_ENV
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
@@ -47,17 +44,7 @@ jobs:
           terraform apply -auto-approve
         env:
           TF_VAR_project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
 
       - name: Deploy to Firebase
         run: |
-          echo "Deploying to project: $GCLOUD_PROJECT_ID"
-          # Workload Identity Federation authentication
-          npx firebase-tools deploy --only hosting:processing-playground --project $GCLOUD_PROJECT_ID
-        env:
-          GCLOUD_PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
-          # The Firebase CLI automatically uses Application Default Credentials (ADC)
-          # which are set up by the google-github-actions/auth action.
-          # We must NOT set FIREBASE_TOKEN here, as it conflicts with ADC.
-          # The key to this working is having the correct permissions on the service account.
-          # Ensure that the service account being used has "Firebase Hosting Admin" role.
+          npx firebase-tools deploy --only hosting:processing-playground --project ${{ secrets.GCLOUD_PROJECT_ID }}
