@@ -48,3 +48,5 @@ jobs:
       - name: Deploy to Firebase
         run: |
           npx firebase-tools deploy --only hosting:processing-playground --project ${{ secrets.GCLOUD_PROJECT_ID }}
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
