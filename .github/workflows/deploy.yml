@@ -37,6 +37,9 @@ jobs:
       - name: Set up Firebase CLI Authentication
         run: echo "GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }}" >> $GITHUB_ENV
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
       - name: Terraform Apply
         working-directory: ./terraform
         run: |
