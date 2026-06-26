@@ -6,6 +6,7 @@
     "sandbox-493916": {
       "hosting": {
         "processing-playground": [
+          "processing-playground",
           "sandbox-493916"
         ]
       }
