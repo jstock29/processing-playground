@@ -34,19 +34,6 @@ jobs:
           workload_identity_provider: "projects/${{ secrets.GCLOUD_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
           service_account: "github-deployer@${{ secrets.GCLOUD_PROJECT_ID }}.iam.gserviceaccount.com"
 
-      - name: Debug auth state
-        run: |
-          echo "=== Credentials file path ==="
-          echo "$GOOGLE_APPLICATION_CREDENTIALS"
-          echo "=== File exists? ==="
-          ls -la "$GOOGLE_APPLICATION_CREDENTIALS" 2>&1 || echo "FILE MISSING"
-          echo "=== Credentials type ==="
-          python3 -c "import json,os; f=os.environ.get('GOOGLE_APPLICATION_CREDENTIALS',''); d=json.load(open(f)) if f else {}; print('type:', d.get('type','NOT SET'))" 2>&1
-          echo "=== gcloud auth list ==="
-          gcloud auth list 2>&1
-          echo "=== gcloud ADC token test ==="
-          gcloud auth application-default print-access-token 2>&1 | head -c 30 && echo " ...truncated"
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
@@ -60,5 +47,4 @@ jobs:
 
       - name: Deploy to Firebase
         run: |
-          npx firebase-tools deploy --only hosting:processing-playground --project ${{ secrets.GCLOUD_PROJECT_ID }}
-
+          npx firebase-tools@15.22.1 deploy --only hosting:processing-playground --project ${{ secrets.GCLOUD_PROJECT_ID }}
