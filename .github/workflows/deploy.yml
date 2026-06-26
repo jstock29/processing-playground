@@ -34,8 +34,8 @@ jobs:
           workload_identity_provider: "projects/${{ secrets.GCLOUD_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
           service_account: "github-deployer@${{ secrets.GCLOUD_PROJECT_ID }}.iam.gserviceaccount.com"
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      - name: Set up Firebase CLI Authentication
+        run: echo "GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }}" >> $GITHUB_ENV
 
       - name: Terraform Apply
         working-directory: ./terraform
@@ -44,6 +44,7 @@ jobs:
           terraform apply -auto-approve
         env:
           TF_VAR_project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
 
       - name: Deploy to Firebase
         run: |
@@ -51,3 +52,4 @@ jobs:
           npx firebase-tools deploy --only hosting:processing-playground --project $GCLOUD_PROJECT_ID
         env:
           GCLOUD_PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
