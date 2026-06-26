@@ -52,8 +52,11 @@ jobs:
       - name: Deploy to Firebase
         run: |
           echo "Deploying to project: $GCLOUD_PROJECT_ID"
-          # Explicitly set the service account key location as the active credential source
-          gcloud auth activate-service-account --key-file=${{ steps.auth.outputs.credentials_file_path }}
+          # Since we are using Workload Identity Federation, we do not need to activate a key file.
+          # The google-github-actions/auth action configures the environment for gcloud.
+          # Firebase CLI is authenticated via the ADC environment configured by the action.
           npx firebase-tools deploy --only hosting:processing-playground --project $GCLOUD_PROJECT_ID
         env:
           GCLOUD_PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+          # Explicitly point Firebase CLI to the Application Default Credentials
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
