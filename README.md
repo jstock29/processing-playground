@@ -1,6 +1,10 @@
 # Lightweight Processing/P5.js Wrapper
 A React-based playground to write P5.js sketches, view them in real-time, and manipulate variables via UI controls.
 
+[![Deploy to Firebase Hosting](https://github.com/jstock29/processing-playground/actions/workflows/deploy.yml/badge.svg?event=push)](https://github.com/jstock29/processing-playground/actions/workflows/deploy.yml)
+
+## Available Scripts
+
 ## Features
 - Live Editing: Write P5 code and see the canvas update instantly.
 - Instance Mode: Uses P5 instance mode to ensure sketches don't leak globally and can be reset cleanly.
