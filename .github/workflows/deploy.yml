@@ -48,6 +48,7 @@ jobs:
 
       - name: Deploy to Firebase
         env:
-          FIREBASE_TOKEN: ${{ steps.auth.outputs.access_token }} # Passes the token to the CLI
+          FIREBASE_TOKEN: ${{ steps.auth.outputs.access_token }}
         run: |
-          npx firebase-tools deploy --only hosting --project ${{ secrets.GCLOUD_PROJECT_ID }} --non-interactive
+          # Pinning to 15.22.2 to bypass the double-release bug in 15.22.3
+          npx firebase-tools@15.22.2 deploy --only hosting --project ${{ secrets.GCLOUD_PROJECT_ID }} --non-interactive
