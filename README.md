@@ -3,6 +3,8 @@ A React-based playground to write P5.js sketches, view them in real-time, and ma
 
 [![Deploy to Firebase Hosting](https://github.com/jstock29/processing-playground/actions/workflows/deploy.yml/badge.svg?event=push)](https://github.com/jstock29/processing-playground/actions/workflows/deploy.yml)
 
+[https://processing-playground.web.app](https://processing-playground.web.app)
+
 ## Available Scripts
 
 ## Features
