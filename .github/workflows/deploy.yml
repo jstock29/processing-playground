@@ -19,7 +19,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          # 1. Pin to 24.16.0 to bypass the Node.js auth regression
+          node-version: 24.16.0
 
       - name: Install and Build
         run: |
@@ -33,7 +34,7 @@ jobs:
           project_id: "${{ secrets.GCLOUD_PROJECT_ID }}"
           workload_identity_provider: "projects/${{ secrets.GCLOUD_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
           service_account: "github-deployer@${{ secrets.GCLOUD_PROJECT_ID }}.iam.gserviceaccount.com"
-          token_format: "access_token" # Forces a raw OAuth token
+          # 2. Removed token_format to revert back to standard, secure WIF
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -47,8 +48,6 @@ jobs:
           TF_VAR_project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
 
       - name: Deploy to Firebase
-        env:
-          FIREBASE_TOKEN: ${{ steps.auth.outputs.access_token }}
         run: |
-          # Pinning to 15.22.1 to bypass the double-release bug in 15.22.3
+          # 3. Pin to 15.22.1 to bypass the Firebase double-release bug
           npx firebase-tools@15.22.1 deploy --only hosting --project ${{ secrets.GCLOUD_PROJECT_ID }} --non-interactive
