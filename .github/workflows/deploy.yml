@@ -47,4 +47,4 @@ jobs:
 
       - name: Deploy to Firebase
         run: |
-          npx firebase-tools@15.22.1 deploy --only hosting:processing-playground --project ${{ secrets.GCLOUD_PROJECT_ID }}
+          npx firebase-tools deploy --only hosting --project ${{ secrets.GCLOUD_PROJECT_ID }}
